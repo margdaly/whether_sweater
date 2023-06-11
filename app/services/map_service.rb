@@ -1,4 +1,4 @@
-class CityService
+class MapService
   def get_lat_lon(location)
     get_url("/geocoding/v1/address?location=#{location}")
   end
@@ -16,4 +16,3 @@ class CityService
     JSON.parse(response.body, symbolize_names: true)
   end
 end
-#https://www.mapquestapi.com/geocoding/v1/address?location=boulder, co&key=
