@@ -5,10 +5,10 @@ RSpec.describe CityService do
     it 'returns lat and lon for a city', :vcr do
       city_service = CityService.new
 
-      expect(city_service.get_lat_lon('denver,co')).to be_a Hash
-      expect(city_service.get_lat_lon('denver,co')).to have_key :results
+      expect(city_service.get_latLng('denver,co')).to be_a Hash
+      expect(city_service.get_latLng('denver,co')).to have_key :results
 
-      results = city_service.get_lat_lon('denver,co')[:results]
+      results = city_service.get_latLng('denver,co')[:results]
       expect(results).to be an Array
       expect(results.first).to be_a Hash
       expect(results.first).to have_key :locations
