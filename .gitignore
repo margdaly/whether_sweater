@@ -34,4 +34,4 @@
 /config/application.yml
 
 # ignore coverage directory
-/covergage 
+/coverage 
