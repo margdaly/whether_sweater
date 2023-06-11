@@ -1,14 +1,14 @@
 require 'rails_helper'
 
-RSpec.describe CityService do
+RSpec.describe MapService do
   describe '#get_lat_lon' do
     it 'returns lat and lon for a city', :vcr do
-      city_service = CityService.new
+      map_service = MapService.new
 
-      expect(city_service.get_lat_lon('denver,co')).to be_a Hash
-      expect(city_service.get_lat_lon('denver,co')).to have_key :results
+      expect(map_service.get_lat_lon('denver,co')).to be_a Hash
+      expect(map_service.get_lat_lon('denver,co')).to have_key :results
 
-      results = city_service.get_lat_lon('denver,co')[:results]
+      results = map_service.get_lat_lon('denver,co')[:results]
       expect(results).to be_an Array
       expect(results.first).to be_a Hash
       expect(results.first).to have_key :locations
