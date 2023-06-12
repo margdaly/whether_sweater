@@ -12,7 +12,7 @@ class ForecastFacade
 
     Forecast.new(current_weather, daily_weather, hourly_weather)
   end
-  
+
   private
 
   def get_current(weather)

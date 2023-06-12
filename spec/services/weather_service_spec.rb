@@ -37,6 +37,10 @@ RSpec.describe WeatherService do
 
       expect(current).to have_key :uv
       expect(current[:uv]).to be_a Float
+
+      expect(current).to_not have_key :temp_c
+      expect(current).to_not have_key :wind_mph
+      expect(current).to_not have_key :vis_km
     end
 
     it 'returns the 5 day forecast for a city', :vcr do
@@ -80,6 +84,9 @@ RSpec.describe WeatherService do
         expect(forecast[:astro][:sunrise]).to be_a String
         expect(forecast[:astro]).to have_key :sunset
         expect(forecast[:astro][:sunset]).to be_a String
+
+        expect(forecast).to_not have_key :moonrise
+        expect(forecast).to_not have_key :moonset
       end
     end
 
