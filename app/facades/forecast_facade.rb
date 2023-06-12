@@ -13,6 +13,29 @@ class ForecastFacade
     Forecast.new(current_weather, daily_weather, hourly_weather)
   end
 
+  def only_current(location)
+    lat_lon = map_service.get_lat_lon(location)
+    lat = lat_lon[:results].first[:locations].first[:latLng][:lat]
+    lon = lat_lon[:results].first[:locations].first[:latLng][:lng]
+
+    weather = weather_service.get_weather(lat, lon)
+
+    current_weather = get_current(weather)
+    {
+      last_updated: weather[:current][:last_updated],
+      temperature: weather[:current][:temp_f],
+      feels_like: weather[:current][:feelslike_f],
+      humidity: weather[:current][:humidity],
+      uvi: weather[:current][:uv],
+      visibility: weather[:current][:vis_miles],
+      condition: weather[:current][:condition][:text],
+      icon: weather[:current][:condition][:icon]
+    }
+    daily_weather = []
+    hourly_weather = []
+    Forecast.new(current_weather, daily_weather, hourly_weather)
+  end
+
   private
 
   def get_current(weather)

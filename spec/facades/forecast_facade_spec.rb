@@ -21,4 +21,17 @@ RSpec.describe ForecastFacade do
       expect(forecast.hourly_weather.first).to be_a Hash
     end
   end
+
+  describe '#only_current' do
+    it 'returns only the current weatehr', :vcr do
+      forecast = ForecastFacade.new.only_current('denver,co')
+
+      expect(forecast).to be_a Forecast
+      expect(forecast.current_weather).to be_a Hash
+      expect(forecast.daily_weather).to be_an Array
+      expect(forecast.daily_weather).to eq([])
+      expect(forecast.hourly_weather).to be_an Array
+      expect(forecast.hourly_weather).to eq([])
+    end
+  end
 end
