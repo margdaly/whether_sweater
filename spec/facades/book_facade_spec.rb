@@ -21,9 +21,16 @@ RSpec.describe 'Book Facade' do
     end
   end
 
-  describe 'get_weather' do
+  describe 'current_weather' do
     it 'returns a weather object', :vcr do
-      
+      weather = BookFacade.new.current_weather('denver,co')
+
+      expect(weather).to be_a Weather
+      expect(weather.id).to eq(nil)
+      expect(weather.type).to eq("weather")
+      expect(weather.current_weather).to be_a Hash
+      expect(weather.daily_weather).to be_an Array
+      expect(weather.hourly_weather).to be_an Array
     end
   end
 end
