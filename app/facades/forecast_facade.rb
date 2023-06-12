@@ -21,7 +21,7 @@ class ForecastFacade
     weather = weather_service.get_weather(lat, lon)
 
     current_weather = get_current(weather)
-    {
+    `{
       last_updated: weather[:current][:last_updated],
       temperature: weather[:current][:temp_f],
       feels_like: weather[:current][:feelslike_f],
@@ -30,7 +30,7 @@ class ForecastFacade
       visibility: weather[:current][:vis_miles],
       condition: weather[:current][:condition][:text],
       icon: weather[:current][:condition][:icon]
-    }
+    }`
     daily_weather = []
     hourly_weather = []
     Forecast.new(current_weather, daily_weather, hourly_weather)

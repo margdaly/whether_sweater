@@ -1,4 +1,11 @@
-class BookSerializer
-  include FastJsonapi::ObjectSerializer
-  attributes :title, :publisher, :isbn
+class Book
+  attr_reader :id, :type, :title, :publisher#, :isbn
+
+  def initialize(title, publisher)#, isbn)
+    @id = nil
+    @type = 'book'
+    @title = title
+    @publisher = publisher
+    # @isbn = isbn
+  end
 end
