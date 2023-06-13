@@ -6,7 +6,7 @@ class Api::V0::SessionsController < ApplicationController
     if user && user.authenticate(params[:session][:password])
       render json: UsersSerializer.new(user), status: 200
     else
-      render json: ErrorSerializer.new(error[:status]), status: 400
+      render json: { error: 'Invalid credentials, please try again.' }, status: 400
     end
   end
 

@@ -37,4 +37,47 @@ RSpec.describe 'Login Request' do
       expect(attributes[:api_key].length).to eq(20)
     end
   end
+
+  describe 'sad path: POST /api/v0/sessions' do
+    scenario 'email does not exist' do
+      user = User.create!(email: 'whatever@example.com', password: 'password', password_confirmation: 'password')
+      user.destroy
+      login_params = 
+      {
+        'email': 'whatever@example.com',
+        'password': 'password'
+      }
+
+      headers = { 'CONTENT_TYPE' => 'application/json' }
+
+      post '/api/v0/sessions', headers: headers, params: JSON.generate(login_params)
+
+      expect(response).to_not be_successful
+      expect(response.status).to eq(400)
+
+      failure = JSON.parse(response.body, symbolize_names: true)
+
+      expect(failure[:error]).to eq('Invalid credentials, please try again.')
+    end
+
+    scenario 'password does not match' do
+      User.create!(email: 'whatever@example.com', password: 'password', password_confirmation: 'password')
+      login_params = 
+      {
+        'email': 'whatever@example.com',
+        'password': 'test'
+      }
+
+      headers = { 'CONTENT_TYPE' => 'application/json' }
+
+      post '/api/v0/sessions', headers: headers, params: JSON.generate(login_params)
+
+      expect(response).to_not be_successful
+      expect(response.status).to eq(400)
+
+      failure = JSON.parse(response.body, symbolize_names: true)
+
+      expect(failure[:error]).to eq('Invalid credentials, please try again.')
+    end
+  end
 end
