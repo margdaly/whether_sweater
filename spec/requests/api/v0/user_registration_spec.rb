@@ -71,5 +71,25 @@ RSpec.describe 'User Registration', type: :request do
 
       expect(failure[:error]).to eq("Validation failed: Password confirmation doesn't match Password")
     end
+
+    scenario 'missing email' do
+      user_params =
+      {
+      'email': '',
+      'password': 'password',
+      'password_confirmation': 'password'
+      }
+
+    headers = { 'CONTENT_TYPE' => 'application/json' }
+
+    post '/api/v0/users', headers: headers, params: JSON.generate(user_params)
+
+    expect(response).to_not be_successful
+    expect(response.status).to eq(400)
+
+    failure = JSON.parse(response.body, symbolize_names: true)
+
+    expect(failure[:error]).to eq("Validation failed: Email can't be blank")
+    end
   end
 end
