@@ -1,12 +1,14 @@
 require 'rails_helper'
 
-RSpec.decribe 'Login Request' do
+RSpec.describe 'Login Request' do
   describe 'happy path: POST /api/v0/sessions' do
     scenario 'user logs in', :vcr do
+      User.create!(email: 'whatever@example.com', password: 'password', password_confirmation: 'password')
+
       login_params = 
       {
-        "email": "whatever@example.com",
-        "password": "password"
+        'email': 'whatever@example.com',
+        'password': 'password'
       }
 
       headers = { 'CONTENT_TYPE' => 'application/json' }
