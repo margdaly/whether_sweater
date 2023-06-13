@@ -11,9 +11,9 @@ class Api::V0::UsersController < ApplicationController
   end
 
   def create
-    user = User.create!(user_params)
-
-    render json: UsersSerializer.new(user), status: 201
+    new_user = User.create!(user_params)
+    session[:user_id] = new_user.id
+    render json: UsersSerializer.new(new_user), status: 201
   end
 
   private
