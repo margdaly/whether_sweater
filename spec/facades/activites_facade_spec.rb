@@ -20,6 +20,15 @@ RSpec.describe ActivitiesFacade do
   end
 
   describe '#activities' do
+    it 'can determine an activity', :vcr do
+      facade = ActivitiesFacade.new('denver,co')
 
+      expect(facade.determine_activity).to be_a Hash
+    end
+
+    it 'can get activities', :vcr do
+      activities = ActivitiesFacade.new('denver,co').determine_activity
+      expect(activities).to be_a Hash
+    end
   end
 end
