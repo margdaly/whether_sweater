@@ -4,9 +4,9 @@ RSpec.describe 'Road Trip API' do
   describe 'happy path: POST /api/v0/road_trip' do
     scenario 'returns road trip information', :vcr do
       roadtrip_params = {
-        'origin': 'Cincinatti,OH',
-        'destination': 'Chicago,IL',
-        'api_key': 't1h2i3s4_i5s6_l7e8g9i10t11'
+        "origin": "Cincinatti,OH",
+        "destination": "Chicago,IL",
+        "api_key": "t1h2i3s4_i5s6_l7e8g9i10t11"
       }
 
       post '/api/v0/road_trip', headers: headers, params: JSON.generate(roadtrip_params)

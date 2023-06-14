@@ -1,4 +1,5 @@
 class Api::V0::UsersController < ApplicationController
+  skip_before_action :verify_authenticity_token
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
   rescue_from ActiveRecord::RecordInvalid, with: :render_invalid_response
 
@@ -12,7 +13,7 @@ class Api::V0::UsersController < ApplicationController
 
   def create
     new_user = User.create!(user_params)
-    session[:user_id] = new_user.id
+    # session[:user_id] = new_user.id
     render json: UsersSerializer.new(new_user), status: 201
   end
 

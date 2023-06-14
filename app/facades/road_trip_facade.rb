@@ -6,20 +6,16 @@ class RoadTripFacade
   end
 
   def road_trip
-    if trip[:info][:statuscode] == 402
-      RoadTrip.new(origin, destination, 'impossible route', {})
-    else
-      weather[:forecast][:forecastday].map do |day|
-        if day[:date] == date
-          day[:hour].map do |hour|
-            if hour[:time] == date + ' ' + time.strftime('%H:%M')
-              weather_at_eta = weather_service.get_trip_weather(date, time, lat, lon)
-              RoadTrip.new(@start_city, @end_city, travel_time, weather_at_eta)
-            end
-          end
-        end
-      end
-    end
+    lat_lon = mapquest_service.get_lat_lon(@end_city)
+    lat = lat_lon[:results].first[:locations].first[:latLng][:lat]
+    lon = lat_lon[:results].first[:locations].first[:latLng][:lng]
+    weather_at_destination = weather_service.get_trip_weather(date, time, lat, lon)
+    weather_at_eta = {
+      date_time: weather_at_destination[:forecast][:forecastday][0][:hour][0][:time],
+      temperature: weather_at_destination[:forecast][:forecastday][0][:hour][0][:temp_f],
+      condition: weather_at_destination[:forecast][:forecastday][0][:hour][0][:condition][:text]
+    }
+    RoadTrip.new(@start_city, @end_city, travel_time, weather_at_eta)
   end
 
   def travel_time
