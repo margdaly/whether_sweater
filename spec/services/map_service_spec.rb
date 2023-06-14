@@ -25,17 +25,19 @@ RSpec.describe MapService do
     end
   end
 
-  describe '#get_directions' do
-    it 'returns details for directions', :vcr do
+  describe '#get_timing' do
+    it 'returns timing for a trip', :vcr do
       origin = 'New York, NY'
       destination = 'Los Angeles, CA'
-      directions = @map_service.get_directions(origin, destination)
+      directions = @map_service.get_timing(origin, destination)
 
       expect(directions).to be_a Hash
       expect(directions).to have_key :route
       expect(directions[:route]).to be_a Hash
       expect(directions[:route]).to have_key :formattedTime
       expect(directions[:route][:formattedTime]).to be_a String
+      expect(directions[:route]).to have_key :realTime
+      expect(directions[:route][:realTime]).to be_an Integer
     end
   end
 end

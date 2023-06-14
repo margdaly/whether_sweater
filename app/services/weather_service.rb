@@ -3,6 +3,10 @@ class WeatherService
     get_url("/v1/forecast.json?&days=5&q=#{lat},#{lon}")
   end
 
+  def get_trip_weather(date, time, lat, lon)
+    get_url("/v1/forecast.json?q=#{lat},#{lon}&dt=#{date}&hour=#{time}")
+  end
+
   private
 
   def conn

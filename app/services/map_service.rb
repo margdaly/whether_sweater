@@ -3,7 +3,7 @@ class MapService
     get_url("/geocoding/v1/address?location=#{location}")
   end
 
-  def get_directions(origin, destination)
+  def get_timing(origin, destination)
     get_url("/directions/v2/route?from=#{origin}&to=#{destination}")
   end
 
